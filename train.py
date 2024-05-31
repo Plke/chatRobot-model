@@ -8,6 +8,8 @@ from utils import AdamWarmup, LossWithLS, get_acc
 import numpy as np
 from tqdm import tqdm
 import sys
+
+
 # from torch.utils.tensorboard import SummaryWriter
 
 # summaryWriter = SummaryWriter("logs/log2")
@@ -76,7 +78,6 @@ def train(train_loader, gpt, criterion, epoch):
         sum_loss += float(loss.item()) * samples
         sum_acc += acc.item() * samples
         count += samples
-        
         if i % 100 == 0:
             print("Epoch [{}][{}/{}]\tLoss: {:.3f}\tAcc: {:.3f}".format(epoch, i, len(train_loader), sum_loss/count,sum_acc/count)) #输出累计情况下平均一个词的loss
 
@@ -84,8 +85,7 @@ def train(train_loader, gpt, criterion, epoch):
             
 print("train...")    
 loss_max = 10000000000
-for epoch in range(epoch_start, epochs):
-    
+for epoch in tqdm(range(epoch_start, epochs)):
     loss = train(data_loader, gpt, criterion, epoch)
     
     #tensorboard实时监控
